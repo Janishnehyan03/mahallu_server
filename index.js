@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 // Connect to MongoDB using Mongoose
 mongoose
-  .connect("mongodb://127.0.0.1/mahallu_app", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
