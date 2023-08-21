@@ -10,16 +10,16 @@ const mahalluRoute = require("./routes/mahalluRoute");
 const entryRoute = require("./routes/entryRoute");
 const districtRoute = require("./routes/districtRoute");
 const errorHandler = require("./utils/errorHandler");
-const { graphqlHTTP } = require("express-graphql");
-const schema = require("./graphql-schema/schema");
-const dotenv=require('dotenv')
+const { typeDefs } = require("./graphql/typedefs");
+const dotenv = require("dotenv");
+const { ApolloServer } = require("@apollo/server");
+const { startStandaloneServer } = require("@apollo/server/standalone");
+const { resolvers } = require("./graphql/resolvers");
 
-dotenv.config()
-// Create an Express app
+dotenv.config();
+
 const app = express();
 
-
-// Middleware setup
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
@@ -43,13 +43,6 @@ app.use("/api/user", userRoute);
 app.use("/api/mahallu", mahalluRoute);
 app.use("/api/district", districtRoute);
 app.use("/api/entry", entryRoute);
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    graphiql: true,
-  })
-);
 app.use((req, res) => {
   res.status(404).json({
     error: `cannot find ${req.originalUrl} [${req.method}] on the server`,
@@ -58,8 +51,19 @@ app.use((req, res) => {
 app.use((error, req, res, next) => {
   errorHandler(error, res);
 });
-// Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+
+async function startServer() {
+  const server = new ApolloServer({
+    typeDefs: typeDefs,
+    resolvers: resolvers,
+  });
+
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 3000 },
+  });
+  console.log(`🚀  Server ready at: ${url}`);
+}
+
+startServer().catch((error) => {
+  console.error("Error starting server:", error);
 });
