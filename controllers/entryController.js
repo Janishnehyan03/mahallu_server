@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Entry = require("../models/entryModel");
 const Mahallu = require("../models/mahalluModel");
 const AppError = require("../utils/AppError");
@@ -11,20 +12,22 @@ const {
 exports.createEntry = async (req, res, next) => {
   try {
     const existingEntries = await Entry.find({});
-    const formNumber = (existingEntries.length + 1).toString().padStart(4, "0");
+    let formNumber;
+    if (!req.body.formNumber) {
+      formNumber = (existingEntries.length + 1).toString().padStart(4, "0");
+    }
     const mahallu = await Mahallu.findById(req.user.mahallu);
 
-    const newEntry = await Entry.create({
+    const data = await Entry.create({
       ...req.body,
       formNumber,
       district: mahallu.district,
+      mahallu
     });
 
     res.status(201).json({
       status: "success",
-      data: {
-        newEntry,
-      },
+      data
     });
   } catch (error) {
     next(error);
@@ -81,6 +84,7 @@ exports.getMyMahallu = async (req, res, next) => {
 exports.getHome = async (req, res, next) => {
   try {
     let data = await Entry.aggregate([
+      { $match: { mahallu: new mongoose.Types.ObjectId(req.user.mahallu) } },
       {
         $group: {
           _id: "$formNumber", // Grouping by formNumber
