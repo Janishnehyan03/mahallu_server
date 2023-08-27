@@ -12,18 +12,10 @@ const districtRoute = require("./routes/districtRoute");
 const errorHandler = require("./utils/errorHandler");
 const { typeDefs } = require("./graphql/typedefs");
 const dotenv = require("dotenv");
-const { ApolloServer } = require("@apollo/server");
-const { startStandaloneServer } = require("@apollo/server/standalone");
+const { ApolloServer } = require("apollo-server-express");
 const { resolvers } = require("./graphql/resolvers");
-
 dotenv.config();
 
-const app = express();
-
-app.use(bodyParser.json());
-app.use(cors());
-app.use(morgan("dev"));
-app.use(cookieParser());
 
 // Connect to MongoDB using Mongoose
 mongoose
@@ -38,31 +30,48 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
-// Your routes and application logic would go here
-app.use("/api/user", userRoute);
-app.use("/api/mahallu", mahalluRoute);
-app.use("/api/district", districtRoute);
-app.use("/api/entry", entryRoute);
-app.use((req, res) => {
-  res.status(404).json({
-    error: `cannot find ${req.originalUrl} [${req.method}] on the server`,
-  });
-});
-app.use((error, req, res, next) => {
-  errorHandler(error, res);
-});
+const startServer = async () => {
+  const app = express();
 
-async function startServer() {
+  app.use(bodyParser.json());
+  app.use(cors());
+  app.use(morgan("dev"));
+  app.use(cookieParser());
+  // Your existing routes
+  app.use("/api/user", userRoute);
+  app.use("/api/mahallu", mahalluRoute);
+  app.use("/api/district", districtRoute);
+  app.use("/api/entry", entryRoute);
+
+
+  
+  // Create an Apollo Server instance
   const server = new ApolloServer({
-    typeDefs: typeDefs,
-    resolvers: resolvers,
+    typeDefs,
+    resolvers,
   });
 
-  const { url } = await startStandaloneServer(server, {
-    listen: { port: 3000 },
+  // Start the Apollo Server
+  await server.start();
+
+  // Apply the Apollo Server middleware to the Express app
+  server.applyMiddleware({ app });
+
+  // 404 and error handlers
+  app.use((req, res) => {
+    res.status(404).json({
+      error: `Cannot find ${req.originalUrl} [${req.method}] on the server`,
+    });
   });
-  console.log(`🚀  Server ready at: ${url}`);
-}
+  app.use((error, req, res, next) => {
+    errorHandler(error, res);
+  });
+
+  const port = 3000;
+  app.listen(port, () => {
+    console.log(`🚀  Server ready at http://localhost:${port}`);
+  });
+};
 
 startServer().catch((error) => {
   console.error("Error starting server:", error);

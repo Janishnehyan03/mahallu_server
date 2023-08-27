@@ -17,39 +17,41 @@ exports.createOne = (Model, additionalValues) => async (req, res, next) => {
 };
 
 // Function to retrieve a single document
-exports.getOne = (Model, ...populateOptions) => async (req, res, next) => {
-  try {
-    let query = Model.findById(req.params.id);
+exports.getOne =
+  (Model, ...populateOptions) =>
+  async (req, res, next) => {
+    try {
+      let query = Model.findById(req.params.id);
 
-    if (populateOptions.length > 0) {
-      for (const option of populateOptions) {
-        let populateQuery = option;
+      if (populateOptions.length > 0) {
+        for (const option of populateOptions) {
+          let populateQuery = option;
 
-        if (typeof option === "object" && option.fields) {
-          populateQuery = {
-            path: option.path,
-            select: option.fields.join(" "),
-          };
+          if (typeof option === "object" && option.fields) {
+            populateQuery = {
+              path: option.path,
+              select: option.fields.join(" "),
+            };
+          }
+
+          query = query.populate(populateQuery);
         }
-
-        query = query.populate(populateQuery);
       }
+
+      const doc = await query;
+
+      if (!doc) {
+        throw new AppError("No document found with this ID", 404);
+      }
+
+      res.status(200).json({
+        results: 1,
+        data: doc,
+      });
+    } catch (err) {
+      next(err); // Pass the error to the error handling middleware
     }
-
-    const doc = await query;
-
-    if (!doc) {
-      throw new AppError("No document found with this ID", 404);
-    }
-
-    res.status(200).json({
-      results: 1,
-      data: doc,
-    });
-  } catch (err) {
-    next(err); // Pass the error to the error handling middleware
-  }
-};
+  };
 // Generic function to get all documents
 exports.getAll =
   (Model, ...populateOptions) =>
@@ -100,7 +102,7 @@ exports.getAll =
         results: doc.length,
         data: doc,
       });
-      return doc
+      return doc;
     } catch (err) {
       next(err);
     }
@@ -130,7 +132,7 @@ exports.updateOne = (Model) => async (req, res, next) => {
 // Generic function to delete one document
 exports.deleteOne = (Model) => async (req, res, next) => {
   try {
-    const doc = await Model.findByIdAndDelete(req.params.id);
+    const doc = await Model.findByIdAndUpdate(req.params.id, { deleted: true });
     if (!doc) {
       throw new AppError(`No document found in this ID`, 404);
     }

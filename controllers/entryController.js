@@ -78,3 +78,22 @@ exports.getMyMahallu = async (req, res, next) => {
     next(error);
   }
 };
+exports.getHome = async (req, res, next) => {
+  try {
+    let data = await Entry.aggregate([
+      {
+        $group: {
+          _id: "$formNumber", // Grouping by formNumber
+          firstDoc: { $first: "$$ROOT" }, // Selecting the first document in each group
+        },
+      },
+      {
+        $replaceRoot: { newRoot: "$firstDoc" }, // Replace the root with the selected document
+      },
+    ]);
+
+    res.status(200).json({ results: data.length, data });
+  } catch (error) {
+    next(error);
+  }
+};

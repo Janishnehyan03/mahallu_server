@@ -3,7 +3,7 @@ const gql = require("graphql-tag");
 const typeDefs = gql`
   type Entry {
     _id: ID
-    mahallu: String
+    mahallu: Mahallu
     headOfTheFamily: String
     formNumber: String
     houseNumber: String
@@ -45,11 +45,14 @@ const typeDefs = gql`
     _id: ID
     name: String
     state: String
+    deleted:Boolean
   }
 
   type Query {
     entry(id: ID): Entry
     mahallu: [Mahallu]
+    entries: [Entry]
+    districts: [District]
   }
 
   type Mutation {

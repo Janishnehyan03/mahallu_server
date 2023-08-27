@@ -152,3 +152,49 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+exports.forgotPassword = async (req, res) => {
+  const { phoneNumber } = req.body;
+
+  try {
+    const user = await User.findOne({ phoneNumber });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const otp = user.generateOTP();
+    // Code to send OTP to user's email or phone (implementation not shown)
+    // You can use libraries like nodemailer or Twilio for this purpose
+    console.log(otp);
+    await user.save();
+
+    res.status(200).json({ message: "OTP sent successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+exports.resetPassword = async (req, res) => {
+  const { phoneNumber, otp, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ phoneNumber });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!user.otp || user.isOTPExpired() || user.otp.code !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    // Reset the password and clear OTP
+    user.password = newPassword;
+    user.otp = undefined;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
