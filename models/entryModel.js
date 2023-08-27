@@ -36,25 +36,12 @@ const entrySchema = new mongoose.Schema(
         "Doctorate", // Higher Education
       ],
     },
-    headOfTheFamily: {
-      type: String,
-      required: [true, "Head of the Family is required"],
-    },
     formNumber: { type: String, required: [true, "Form Number is required"] },
     houseNumber: { type: String, required: [true, "House Number is required"] },
-    contactNumber: {
-      type: String,
-      required: [true, "Contact Number is required"],
-    },
     dateOfSurvey: {
       type: Date,
       required: [true, "Date of Survey is required"],
       default: Date.now(),
-    },
-    areaCode: { type: String, required: [true, "Area Code is required"] },
-    numberOfFamilyMembers: {
-      type: Number,
-      required: [true, "Number of Family Members is required"],
     },
     gender: {
       type: String,
@@ -62,29 +49,30 @@ const entrySchema = new mongoose.Schema(
       enum: ["male", "female"],
     },
     dob: { type: Date, required: [true, "Date of Birth is required"] },
-    relationWithHead: {
-      type: String,
-      required: [true, "Relation with Head of Family is required"],
-    },
     mobileNumber: {
       type: String,
       required: [true, "Mobile Number is required"],
     },
-    maritalStatus: { type: String, required: false },
     educationalQualification: { type: String, required: false },
     institutionOfStudy: { type: String, required: false },
     religiousEducation: { type: String, required: false },
     materialEducation: { type: String, required: true },
     jobDetails: { type: String, required: false },
-    health: { type: String, required: false },
     bloodGroup: { type: String, required: false },
     jobType: {
       govtService: { type: Boolean, required: false },
       privateSector: { type: Boolean, required: false },
       dailyWage: { type: Boolean, required: false },
     },
-    suggestions: { type: String, required: false },
-    remarks: { type: String, required: false },
+    govtAllowance: {
+      pention: { type: Boolean, required: false },
+      scholarship: { type: Boolean, required: false },
+      other: { type: String, required: false },
+    },
+    houseOwnership: {
+      own: { type: Boolean, required: false },
+      rent: { type: Boolean, required: false },
+    },
     deleted: { type: Boolean, default: false },
   },
   { timestamps: true }
