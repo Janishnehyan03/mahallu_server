@@ -9,6 +9,9 @@ const userRoute = require("./routes/userRoute");
 const mahalluRoute = require("./routes/mahalluRoute");
 const entryRoute = require("./routes/entryRoute");
 const districtRoute = require("./routes/districtRoute");
+const messageRoute = require("./routes/messageRoute");
+
+
 const errorHandler = require("./utils/errorHandler");
 const { typeDefs } = require("./graphql/typedefs");
 const dotenv = require("dotenv");
@@ -42,6 +45,7 @@ const startServer = async () => {
   app.use("/api/mahallu", mahalluRoute);
   app.use("/api/district", districtRoute);
   app.use("/api/entry", entryRoute);
+  app.use("/api/message", messageRoute);
 
 
   

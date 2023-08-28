@@ -21,7 +21,6 @@ exports.getMahalluDetails = async function fetchMahalluWithDetails(
 ) {
   try {
     const mahalluId = new mongoose.Types.ObjectId(req.params.id);
-
     const result = await Mahallu.aggregate([
       // Match the specific Mahallu
       { $match: { _id: mahalluId } },
@@ -65,7 +64,7 @@ exports.getMahalluDetails = async function fetchMahalluWithDetails(
             },
           },
           academicStages: {
-            $addToSet: {
+            $push: {
               stage: "$entries.academicStage",
               count: 1,
             },
@@ -76,11 +75,12 @@ exports.getMahalluDetails = async function fetchMahalluWithDetails(
       {
         $addFields: {
           academicStages: {
-            $arrayToObject: {
-              $map: {
-                input: "$academicStages",
-                as: "stage",
-                in: { k: "$$stage.stage", v: "$$stage.count" },
+            $map: {
+              input: "$academicStages",
+              as: "stage",
+              in: {
+                k: { $ifNull: ["$$stage.stage", "null"] },
+                v: "$$stage.count",
               },
             },
           },
@@ -96,7 +96,7 @@ exports.getMahalluDetails = async function fetchMahalluWithDetails(
           govtServiceCount: 1,
           privateSectorCount: 1,
           dailyWageCount: 1,
-          academicStages: 1,
+          academicStages: { $arrayToObject: "$academicStages" },
         },
       },
     ]);
@@ -176,11 +176,15 @@ exports.getAllMahalluOverview = async function fetchAllMahalluOverview(
             $map: {
               input: "$academicStages",
               as: "stage",
-              in: { k: "$$stage.stage", v: "$$stage.count" },
+              in: {
+                k: { $ifNull: ["$$stage.stage", "null"] },
+                v: "$$stage.count",
+              },
             },
           },
         },
       },
+      
       {
         $project: {
           totalEntries: 1,

@@ -16,6 +16,7 @@ const entrySchema = new mongoose.Schema(
     // LKG, UKG, 1,2,3,4,5,6,7,...
     academicStage: {
       type: String,
+      default:null,
       enum: [
         "LKG",
         "UKG", // Kindergarten
