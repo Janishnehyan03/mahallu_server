@@ -11,14 +11,12 @@ const entryRoute = require("./routes/entryRoute");
 const districtRoute = require("./routes/districtRoute");
 const messageRoute = require("./routes/messageRoute");
 
-
 const errorHandler = require("./utils/errorHandler");
 const { typeDefs } = require("./graphql/typedefs");
 const dotenv = require("dotenv");
 const { ApolloServer } = require("apollo-server-express");
 const { resolvers } = require("./graphql/resolvers");
 dotenv.config();
-
 
 // Connect to MongoDB using Mongoose
 mongoose
@@ -37,7 +35,7 @@ const startServer = async () => {
   const app = express();
 
   app.use(bodyParser.json());
-  app.use(cors());
+  app.use(cors({ origin: true, credentials: true }));
   app.use(morgan("dev"));
   app.use(cookieParser());
   // Your existing routes
@@ -47,8 +45,6 @@ const startServer = async () => {
   app.use("/api/entry", entryRoute);
   app.use("/api/message", messageRoute);
 
-
-  
   // Create an Apollo Server instance
   const server = new ApolloServer({
     typeDefs,
