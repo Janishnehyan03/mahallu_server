@@ -8,6 +8,7 @@ const {
   getOneUser,
   forgotPassword,
   resetPassword,
+  logout,
 } = require("../controllers/userController");
 
 const router = require("express").Router();
@@ -19,5 +20,6 @@ router.get("/", protect, restrictTo("superAdmin"), getAllUsers);
 router.route("/:id").get(protect, getOneUser);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", protect, resetPassword);
+router.post("/logout", logout);
 
 module.exports = router;
