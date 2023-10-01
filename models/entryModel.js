@@ -16,7 +16,7 @@ const entrySchema = new mongoose.Schema(
     // LKG, UKG, 1,2,3,4,5,6,7,...
     academicStage: {
       type: String,
-      default:null,
+      default: null,
       enum: [
         "LKG",
         "UKG", // Kindergarten
@@ -34,7 +34,8 @@ const entrySchema = new mongoose.Schema(
         "Class 12", // Junior College/Intermediate
         "Undergraduate",
         "Master's",
-        "Doctorate", // Higher Education
+        "Doctorate",
+        null,
       ],
     },
     formNumber: { type: String, required: [true, "Form Number is required"] },
