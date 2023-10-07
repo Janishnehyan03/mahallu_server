@@ -63,7 +63,7 @@ exports.login = async (req, res, next) => {
         .status(401)
         .json({ error: "enter your phone number and password" });
     }
-    const user = await User.findOne({ phoneNumber });
+    const user = await User.findOne({ phoneNumber }).populate("mahallu");
     if (!user || !bcrypt.compare(password, user.password)) {
       return res
         .status(401)
@@ -164,9 +164,6 @@ exports.forgotPassword = async (req, res) => {
     }
 
     const otp = user.generateOTP();
-    // Code to send OTP to user's email or phone (implementation not shown)
-    // You can use libraries like nodemailer or Twilio for this purpose
-    console.log(otp);
     await user.save();
 
     res.status(200).json({ message: "OTP sent successfully" });
