@@ -10,6 +10,7 @@ const mahalluRoute = require("./routes/mahalluRoute");
 const entryRoute = require("./routes/entryRoute");
 const districtRoute = require("./routes/districtRoute");
 const messageRoute = require("./routes/messageRoute");
+const path=require('path')
 
 const errorHandler = require("./utils/errorHandler");
 const { typeDefs } = require("./graphql/typedefs");
@@ -31,8 +32,8 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
-const startServer = async () => {
   const app = express();
+const startServer = async () => {
 
   app.use(bodyParser.json());
   app.use(cors({ origin: true, credentials: true }));
@@ -72,6 +73,13 @@ const startServer = async () => {
     console.log(`🚀  Server ready at http://localhost:${port}`);
   });
 };
+
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+// Handle any other routes by serving the index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 startServer().catch((error) => {
   console.error("Error starting server:", error);

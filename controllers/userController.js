@@ -203,3 +203,23 @@ exports.logout = (req, res) => {
     success: true,
   });
 };
+
+exports.verifyToken = (req, res, next) => {
+  const token = req.cookies.login_token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    let user = await User.findById(decoded.userId);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(400).json({ error: "User not found" });
+    }
+  });
+};

@@ -9,6 +9,7 @@ const {
   forgotPassword,
   resetPassword,
   logout,
+  verifyToken,
 } = require("../controllers/userController");
 
 const router = require("express").Router();
@@ -21,5 +22,6 @@ router.route("/:id").get(protect, getOneUser);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", protect, resetPassword);
 router.post("/logout", logout);
+router.get("/token/check-login", verifyToken);
 
 module.exports = router;
