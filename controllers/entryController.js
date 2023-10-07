@@ -15,6 +15,8 @@ exports.createEntry = async (req, res, next) => {
     let formNumber;
     if (!req.body.formNumber) {
       formNumber = (existingEntries.length + 1).toString().padStart(4, "0");
+    } else {
+      formNumber = req.body.formNumber;
     }
     const mahallu = await Mahallu.findById(req.user.mahallu);
 
@@ -22,23 +24,30 @@ exports.createEntry = async (req, res, next) => {
       ...req.body,
       formNumber,
       district: mahallu.district,
-      mahallu
+      mahallu,
     });
 
     res.status(201).json({
       status: "success",
-      data
+      formNumber: data.formNumber,
     });
   } catch (error) {
     next(error);
   }
 };
 
-exports.getOneEntry = getOne(
-  Entry,
-  { path: "district", fields: ["name"] },
-  { path: "mahallu", fields: ["name"] }
-);
+exports.getOneEntry = async (req, res, next) => {
+  try {
+    let data = await Entry.findById(req.params.id)
+      .populate("district", "name")
+      .populate("mahallu", "name");
+    let relatedData = await Entry.find({ formNumber: data.formNumber });
+    res.status(200).json({ data, relatedData });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getAllEntries = getAll(
   Entry,
   { path: "district", fields: ["name"] },
@@ -84,7 +93,15 @@ exports.getMyMahallu = async (req, res, next) => {
 exports.getHome = async (req, res, next) => {
   try {
     let data = await Entry.aggregate([
-      { $match: { mahallu: new mongoose.Types.ObjectId(req.user.mahallu) } },
+      {
+        $match: {
+          mahallu: new mongoose.Types.ObjectId(req.user.mahallu),
+          deleted: { $ne: true },
+        },
+      },
+      {
+        $sort: { createdAt: -1 }, // Sort documents by a timestamp or date field in descending order
+      },
       {
         $group: {
           _id: "$formNumber", // Grouping by formNumber

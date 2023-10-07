@@ -39,7 +39,7 @@ const entrySchema = new mongoose.Schema(
       ],
     },
     formNumber: { type: String, required: [true, "Form Number is required"] },
-    houseNumber: { type: String, required: [true, "House Number is required"] },
+    // houseNumber: { type: String, required: [true, "House Number is required"] },
     dateOfSurvey: {
       type: Date,
       required: [true, "Date of Survey is required"],
@@ -50,7 +50,7 @@ const entrySchema = new mongoose.Schema(
       required: [true, "Gender is required"],
       enum: ["male", "female"],
     },
-    dob: { type: Date, required: [true, "Date of Birth is required"] },
+    dob: { type: String, required: [true, "Date of Birth is required"] },
     mobileNumber: {
       type: String,
       required: [true, "Mobile Number is required"],
@@ -58,7 +58,7 @@ const entrySchema = new mongoose.Schema(
     educationalQualification: { type: String, required: false },
     institutionOfStudy: { type: String, required: false },
     religiousEducation: { type: String, required: false },
-    materialEducation: { type: String, required: true },
+    materialEducation: { type: String, required: false },
     jobDetails: { type: String, required: false },
     bloodGroup: { type: String, required: false },
     jobType: {
@@ -79,6 +79,12 @@ const entrySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+entrySchema.pre(/^find/, function (next) {
+  //Effects all queries starts with FIND
+  this.find({ deleted: { $ne: true } });
+  next();
+});
 
 const Entry = mongoose.model("Entry", entrySchema);
 

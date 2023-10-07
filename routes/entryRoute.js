@@ -18,8 +18,8 @@ router.get("/home/data", protect, getHome);
 
 router
   .route("/:id")
-  .get(getOneEntry)
+  .get(protect, restrictTo("admin"), getOneEntry)
   .patch(protect, restrictTo("admin"), updateEntry)
   .delete(protect, restrictTo("admin"), deleteEntry);
-
+// router.get("/get/:formNumber", protect, restrictTo("admin"), getOneEntry);
 module.exports = router;
