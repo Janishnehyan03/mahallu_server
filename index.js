@@ -74,12 +74,12 @@ const startServer = async () => {
   });
 };
 
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+// app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-// Handle any other routes by serving the index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
+// // Handle any other routes by serving the index.html
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+// });
 
 startServer().catch((error) => {
   console.error("Error starting server:", error);

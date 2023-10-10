@@ -24,15 +24,13 @@ const AuthProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    // Function to check if the user is logged in
-
     checkLogin();
   }, []);
 
   const authContextValue = {
     user,
     loading,
-    checkLogin
+    checkLogin,
   };
 
   return (
