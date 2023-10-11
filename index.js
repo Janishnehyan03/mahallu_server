@@ -80,7 +80,7 @@ startServer().catch((error) => {
   console.error("Error starting server:", error);
 });
 
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(process.cwd(), 'client', 'build')));
 
 // Handle any other routes by serving the index.html
 app.get('*', (req, res) => {
