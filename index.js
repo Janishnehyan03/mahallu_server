@@ -10,7 +10,6 @@ const mahalluRoute = require("./routes/mahalluRoute");
 const entryRoute = require("./routes/entryRoute");
 const districtRoute = require("./routes/districtRoute");
 const messageRoute = require("./routes/messageRoute");
-const path=require('path')
 
 const errorHandler = require("./utils/errorHandler");
 const { typeDefs } = require("./graphql/typedefs");
@@ -80,9 +79,3 @@ startServer().catch((error) => {
   console.error("Error starting server:", error);
 });
 
-app.use(express.static(path.join(process.cwd(), 'client', 'build')));
-
-// Handle any other routes by serving the index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-});
