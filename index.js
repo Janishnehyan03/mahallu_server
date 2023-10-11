@@ -68,19 +68,21 @@ const startServer = async () => {
     errorHandler(error, res);
   });
 
+  
   const port = 3000;
   app.listen(port, () => {
     console.log(`🚀  Server ready at http://localhost:${port}`);
   });
 };
 
-// app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-// // Handle any other routes by serving the index.html
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-// });
 
 startServer().catch((error) => {
   console.error("Error starting server:", error);
+});
+
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+// Handle any other routes by serving the index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
