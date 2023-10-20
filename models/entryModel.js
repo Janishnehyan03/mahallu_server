@@ -13,31 +13,7 @@ const entrySchema = new mongoose.Schema(
       ref: "District",
       required: [true, "District is required"],
     },
-    // LKG, UKG, 1,2,3,4,5,6,7,...
-    academicStage: {
-      type: String,
-      default: null,
-      enum: [
-        "LKG",
-        "UKG", // Kindergarten
-        "Class 1",
-        "Class 2",
-        "Class 3",
-        "Class 4",
-        "Class 5", // Primary School
-        "Class 6",
-        "Class 7",
-        "Class 8", // Middle School
-        "Class 9",
-        "Class 10", // High School
-        "Class 11",
-        "Class 12", // Junior College/Intermediate
-        "Undergraduate",
-        "Master's",
-        "Doctorate",
-        null,
-      ],
-    },
+
     formNumber: { type: String, required: [true, "Form Number is required"] },
     // houseNumber: { type: String, required: [true, "House Number is required"] },
     dateOfSurvey: {
@@ -50,28 +26,84 @@ const entrySchema = new mongoose.Schema(
       required: [true, "Gender is required"],
       enum: ["male", "female"],
     },
+    maritalStatus: {
+      type: String,
+      enum: ["Married", "Unmarried", "Widow/er"],
+    },
+    educationalSubject: {
+      type: String,
+      enum: ["Science", "Humanities", "Commerce"],
+    },
     dob: { type: String, required: [true, "Date of Birth is required"] },
     mobileNumber: {
       type: String,
       required: [true, "Mobile Number is required"],
     },
-    educationalQualification: { type: String, required: false },
-    educationalSubject: { type: String, required: false },
-    institutionOfStudy: { type: String, required: false },
-    religiousEducation: { type: String, required: false },
-    materialEducation: { type: String, required: false },
-    jobDetails: { type: String, required: false },
-    bloodGroup: { type: String, required: false },
-    jobType: { type: String },
-    govtType: { type: String },
-    profession: { type: String },
-    health: { type: String },
-    abroad: { type: String },
-    govtAllowance: {
+    educationalSubject: {
       type: String,
+      enum: ["Science", "Humanities", "Commerce"],
     },
+    institutionOfStudy: {
+      type: String,
+      enum: [
+        "Government",
+        "Aided",
+        "Self Finance",
+        "Institute of National Importance",
+        "Centeral University",
+        "Abroad",
+        "Other",
+      ],
+    },
+    religiousEducation: {
+      type: String,
+      enum: ["Dars", "Arabic Collage", "Madrasa"],
+    },
+    materialEducation: {
+      type: String,
+      enum: [
+        "Primary",
+        "Secondary",
+        "10th",
+        "Plus One",
+        "Plus Two",
+        "Predegree",
+        "Degree",
+        "PG",
+        "Phd",
+      ],
+    },
+    bloodGroup: { type: String, required: false },
+    jobType: {
+      type: String,
+      enum: ["Government Service", "Private Sector", "Daily Wage", "Gulf"],
+    },
+    govtType: { type: String, enum: ["Gazatted", "Grade A", "Grade A"] },
+    profession: {
+      type: String,
+      enum: [
+        "Doctor",
+        "Nurse",
+        "Scientist",
+        "Teacher",
+        "Self Employee",
+        "Police",
+        "Airforce",
+        "Driver",
+        "Gulf",
+        "Agriculture",
+        "Kooli",
+      ],
+    },
+    health: { type: String, enum: ["Nithya Rogikal", "Kidney", "Cancer"] },
+    abroad: { type: String, enum: ["Saudi", "Europe", "NRK"] },
+    // govtAllowance: {
+    //   type: String,
+    //   enum:['']
+    // },
     houseOwnership: {
       type: String,
+      enum: ["own", "rent", "not own"],
     },
     deleted: { type: Boolean, default: false },
   },
