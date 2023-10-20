@@ -68,13 +68,10 @@ const entrySchema = new mongoose.Schema(
     health: { type: String },
     abroad: { type: String },
     govtAllowance: {
-      pention: { type: Boolean, required: false },
-      scholarship: { type: Boolean, required: false },
-      other: { type: String, required: false },
+      type: String,
     },
     houseOwnership: {
-      own: { type: Boolean, required: false },
-      rent: { type: Boolean, required: false },
+      type: String,
     },
     deleted: { type: Boolean, default: false },
   },
