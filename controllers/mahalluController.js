@@ -62,7 +62,7 @@ exports.getMahalluDetails = async function fetchMahalluWithDetails(req, res, nex
           commerceCount: {
             $sum: { $cond: [{ $eq: ["$entries.educationalSubject", "Commerce"] }, 1, 0] },
           },
-          governmentServiceCount: {
+          govtServiceCount: {
             $sum: { $cond: [{ $eq: ["$entries.jobType", "Government Service"] }, 1, 0] },
           },
           privateSectorCount: {
@@ -94,7 +94,7 @@ exports.getMahalluDetails = async function fetchMahalluWithDetails(req, res, nex
           scienceCount: 1,
           humanitiesCount: 1,
           commerceCount: 1,
-          governmentServiceCount: 1,
+          govtServiceCount: 1,
           privateSectorCount: 1,
           dailyWageCount: 1,
           // Project additional fields
