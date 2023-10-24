@@ -30,8 +30,9 @@ exports.createEntry = async (req, res, next) => {
     res.status(201).json({
       status: "success",
       formNumber: data.formNumber,
-    });
+    }); 
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

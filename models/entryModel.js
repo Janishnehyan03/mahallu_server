@@ -24,16 +24,16 @@ const entrySchema = new mongoose.Schema(
     gender: {
       type: String,
       required: [true, "Gender is required"],
-      enum: ["male", "female"],
+      enum: [null, "male", "female"],
     },
     maritalStatus: {
       type: String,
-      enum: ["Married", "Unmarried", "Widow/er"],
+      enum: [null, "Married", "Unmarried", "Widow/er"],
       required: false,
     },
     educationalSubject: {
       type: String,
-      enum: ["Science", "Humanities", "Commerce"],
+      enum: [null, "Science", "Humanities", "Commerce"],
       required: false,
     },
     dob: { type: String, required: [true, "Date of Birth is required"] },
@@ -46,6 +46,7 @@ const entrySchema = new mongoose.Schema(
       type: String,
       required: false,
       enum: [
+        null,
         "Government",
         "Aided",
         "Self Finance",
@@ -58,12 +59,13 @@ const entrySchema = new mongoose.Schema(
     religiousEducation: {
       type: String,
       required: false,
-      enum: ["Dars", "Arabic Collage", "Madrasa"],
+      enum: [null, "Dars", "Arabic Collage", "Madrasa"],
     },
     materialEducation: {
       type: String,
       required: false,
       enum: [
+        null,
         "Primary",
         "Secondary",
         "10th",
@@ -77,14 +79,25 @@ const entrySchema = new mongoose.Schema(
     bloodGroup: { type: String, required: false },
     jobType: {
       type: String,
-      enum: ["Government Service", "Private Sector", "Daily Wage", "Gulf"],
+      enum: [
+        null,
+        "Government Service",
+        "Private Sector",
+        "Daily Wage",
+        "Gulf",
+      ],
       required: false,
     },
-    govtType: { type: String, enum: ["Gazatted", "Grade A", "Grade A"] ,required: false,},
+    govtType: {
+      type: String,
+      enum: [null, "Gazatted", "Grade A", "Grade A"],
+      required: false,
+    },
     pensions: {
       type: String,
       required: false,
       enum: [
+        null,
         "Widow Pension",
         "Agricultural Pension",
         "Govt Retired Pension",
@@ -95,6 +108,7 @@ const entrySchema = new mongoose.Schema(
       type: String,
       required: false,
       enum: [
+        null,
         "Doctor",
         "Nurse",
         "Scientist",
@@ -112,12 +126,20 @@ const entrySchema = new mongoose.Schema(
     health: {
       type: String,
       required: false,
-      enum: ["Diabetes", "Hypertension", "Kidney Disease", "Cancer", "Healthy"],
+      enum: [
+        null,
+        "Diabetes",
+        "Hypertension",
+        "Kidney Disease",
+        "Cancer",
+        "Healthy",
+      ],
     },
     degree: {
       type: String,
       required: false,
       enum: [
+        null,
         "Computer Science",
         "Mechanical Engineering",
         "Electrical Engineering",
@@ -133,6 +155,7 @@ const entrySchema = new mongoose.Schema(
       type: String,
       required: false,
       enum: [
+        null,
         "Saudi",
         "Europe",
         "NRK",
@@ -145,6 +168,7 @@ const entrySchema = new mongoose.Schema(
       type: String,
       required: false,
       enum: [
+        null,
         "INSPIRE Scholarship",
         "National Talent Search Examination (NTSE)",
         "Kishore Vaigyanik Protsahan Yojana (KVPY)",
@@ -165,7 +189,7 @@ const entrySchema = new mongoose.Schema(
     houseOwnership: {
       type: String,
       required: false,
-      enum: ["own", "rent", "not own"],
+      enum: [null, "own", "rent", "not own"],
     },
     deleted: { type: Boolean, default: false },
   },
