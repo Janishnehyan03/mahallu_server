@@ -29,23 +29,22 @@ const entrySchema = new mongoose.Schema(
     maritalStatus: {
       type: String,
       enum: ["Married", "Unmarried", "Widow/er"],
+      required: false,
     },
     educationalSubject: {
       type: String,
       enum: ["Science", "Humanities", "Commerce"],
+      required: false,
     },
     dob: { type: String, required: [true, "Date of Birth is required"] },
     mobileNumber: {
       type: String,
       required: [true, "Mobile Number is required"],
     },
-    educationalSubject: {
-      type: String,
-      enum: ["Science", "Humanities", "Commerce"],
-      required:false
-    },
+
     institutionOfStudy: {
       type: String,
+      required: false,
       enum: [
         "Government",
         "Aided",
@@ -58,10 +57,12 @@ const entrySchema = new mongoose.Schema(
     },
     religiousEducation: {
       type: String,
+      required: false,
       enum: ["Dars", "Arabic Collage", "Madrasa"],
     },
     materialEducation: {
       type: String,
+      required: false,
       enum: [
         "Primary",
         "Secondary",
@@ -77,10 +78,12 @@ const entrySchema = new mongoose.Schema(
     jobType: {
       type: String,
       enum: ["Government Service", "Private Sector", "Daily Wage", "Gulf"],
+      required: false,
     },
-    govtType: { type: String, enum: ["Gazatted", "Grade A", "Grade A"] },
+    govtType: { type: String, enum: ["Gazatted", "Grade A", "Grade A"] ,required: false,},
     pensions: {
       type: String,
+      required: false,
       enum: [
         "Widow Pension",
         "Agricultural Pension",
@@ -90,6 +93,7 @@ const entrySchema = new mongoose.Schema(
     },
     profession: {
       type: String,
+      required: false,
       enum: [
         "Doctor",
         "Nurse",
@@ -107,10 +111,12 @@ const entrySchema = new mongoose.Schema(
     },
     health: {
       type: String,
+      required: false,
       enum: ["Diabetes", "Hypertension", "Kidney Disease", "Cancer", "Healthy"],
     },
     degree: {
       type: String,
+      required: false,
       enum: [
         "Computer Science",
         "Mechanical Engineering",
@@ -125,6 +131,7 @@ const entrySchema = new mongoose.Schema(
     },
     abroad: {
       type: String,
+      required: false,
       enum: [
         "Saudi",
         "Europe",
@@ -136,6 +143,7 @@ const entrySchema = new mongoose.Schema(
     },
     scholarships: {
       type: String,
+      required: false,
       enum: [
         "INSPIRE Scholarship",
         "National Talent Search Examination (NTSE)",
@@ -156,6 +164,7 @@ const entrySchema = new mongoose.Schema(
     // },
     houseOwnership: {
       type: String,
+      required: false,
       enum: ["own", "rent", "not own"],
     },
     deleted: { type: Boolean, default: false },
