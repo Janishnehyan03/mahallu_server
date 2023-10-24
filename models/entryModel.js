@@ -42,6 +42,7 @@ const entrySchema = new mongoose.Schema(
     educationalSubject: {
       type: String,
       enum: ["Science", "Humanities", "Commerce"],
+      required:false
     },
     institutionOfStudy: {
       type: String,
