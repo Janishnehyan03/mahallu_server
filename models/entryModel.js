@@ -65,7 +65,6 @@ const entrySchema = new mongoose.Schema(
         "Primary",
         "Secondary",
         "10th",
-        "Plus One",
         "Plus Two",
         "Predegree",
         "Degree",
@@ -79,6 +78,7 @@ const entrySchema = new mongoose.Schema(
       enum: ["Government Service", "Private Sector", "Daily Wage", "Gulf"],
     },
     govtType: { type: String, enum: ["Gazatted", "Grade A", "Grade A"] },
+    pensions: { type: String, enum: ["Widow Pension", "Agricultural Pension", "Govt Retired Pension","Other"] },
     profession: {
       type: String,
       enum: [
@@ -88,15 +88,21 @@ const entrySchema = new mongoose.Schema(
         "Teacher",
         "Self Employee",
         "Police",
-        "Airforce",
+        "Indian Force",
         "Driver",
         "Gulf",
         "Agriculture",
         "Kooli",
       ],
     },
-    health: { type: String, enum: ["Nithya Rogikal", "Kidney", "Cancer"] },
-    abroad: { type: String, enum: ["Saudi", "Europe", "NRK"] },
+    health: {
+      type: String,
+      enum: ["Diabetes", "Hypertension", "Kidney Disease", "Cancer", "Healthy"],
+    },
+    abroad: {
+      type: String,
+      enum: ["Saudi", "Europe", "NRK", "American Continent", "UAE"],
+    },
     // govtAllowance: {
     //   type: String,
     //   enum:['']
