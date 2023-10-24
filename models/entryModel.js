@@ -78,7 +78,15 @@ const entrySchema = new mongoose.Schema(
       enum: ["Government Service", "Private Sector", "Daily Wage", "Gulf"],
     },
     govtType: { type: String, enum: ["Gazatted", "Grade A", "Grade A"] },
-    pensions: { type: String, enum: ["Widow Pension", "Agricultural Pension", "Govt Retired Pension","Other"] },
+    pensions: {
+      type: String,
+      enum: [
+        "Widow Pension",
+        "Agricultural Pension",
+        "Govt Retired Pension",
+        "Other",
+      ],
+    },
     profession: {
       type: String,
       enum: [
@@ -93,15 +101,53 @@ const entrySchema = new mongoose.Schema(
         "Gulf",
         "Agriculture",
         "Kooli",
+        "Central Govt",
       ],
     },
     health: {
       type: String,
       enum: ["Diabetes", "Hypertension", "Kidney Disease", "Cancer", "Healthy"],
     },
+    degree: {
+      type: String,
+      enum: [
+        "Computer Science",
+        "Mechanical Engineering",
+        "Electrical Engineering",
+        "Civil Engineering",
+        "Aerospace Engineering",
+        "Chemical Engineering",
+        "Biomedical Engineering",
+        "Industrial Engineering",
+        "Environmental Engineering",
+      ],
+    },
     abroad: {
       type: String,
-      enum: ["Saudi", "Europe", "NRK", "American Continent", "UAE"],
+      enum: [
+        "Saudi",
+        "Europe",
+        "NRK",
+        "American Continent",
+        "UAE",
+        "African Continent",
+      ],
+    },
+    scholarships: {
+      type: String,
+      enum: [
+        "INSPIRE Scholarship",
+        "National Talent Search Examination (NTSE)",
+        "Kishore Vaigyanik Protsahan Yojana (KVPY)",
+        "Maulana Azad National Fellowship for Minority Students",
+        "Dr APJ Abdul Kalam Global Skills Scholarship",
+        "GIIS Global Citizen Scholarship",
+        "Vidyadhan Scholarship",
+        "HDFC Bank Parivartan's ECS Scholarship",
+        "CLP India Scholarship Scheme",
+        "SJE Scholarship",
+        "MP Scholarship Portal",
+      ],
     },
     // govtAllowance: {
     //   type: String,
