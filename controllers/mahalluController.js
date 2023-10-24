@@ -161,7 +161,7 @@ exports.getAllMahalluOverview = async function fetchAllMahalluOverview(
             $sum: { $cond: [{ $eq: ['$entries.educationalSubject', 'Commerce'] }, 1, 0] },
           },
           govtServiceCount: {
-            $sum: { $cond: [{ $eq: ['$entries.jobType', 'Government Service'] }, 1, 0] },
+            $sum: { $cond: [{ $eq: ['$entries.jobType', 'Govt. Service'] }, 1, 0] },
           },
           privateSectorCount: {
             $sum: { $cond: [{ $eq: ['$entries.jobType', 'Private Sector'] }, 1, 0] },
