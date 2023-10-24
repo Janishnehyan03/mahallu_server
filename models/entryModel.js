@@ -96,13 +96,7 @@ const entrySchema = new mongoose.Schema(
     pensions: {
       type: String,
       required: false,
-      enum: [
-        null,
-        "Widow Pension",
-        "Agricultural Pension",
-        "Govt Retired Pension",
-        "Other",
-      ],
+      
     },
     profession: {
       type: String,
@@ -135,7 +129,7 @@ const entrySchema = new mongoose.Schema(
         "Healthy",
       ],
     },
-    degree: {
+    degreeTopic: {
       type: String,
       required: false,
       enum: [
@@ -167,20 +161,7 @@ const entrySchema = new mongoose.Schema(
     scholarships: {
       type: String,
       required: false,
-      enum: [
-        null,
-        "INSPIRE Scholarship",
-        "National Talent Search Examination (NTSE)",
-        "Kishore Vaigyanik Protsahan Yojana (KVPY)",
-        "Maulana Azad National Fellowship for Minority Students",
-        "Dr APJ Abdul Kalam Global Skills Scholarship",
-        "GIIS Global Citizen Scholarship",
-        "Vidyadhan Scholarship",
-        "HDFC Bank Parivartan's ECS Scholarship",
-        "CLP India Scholarship Scheme",
-        "SJE Scholarship",
-        "MP Scholarship Portal",
-      ],
+      
     },
     // govtAllowance: {
     //   type: String,
