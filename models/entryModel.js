@@ -81,7 +81,7 @@ const entrySchema = new mongoose.Schema(
       type: String,
       enum: [
         null,
-        "Government Service",
+        "Govt. Service",
         "Private Sector",
         "Daily Wage",
         "Gulf",
